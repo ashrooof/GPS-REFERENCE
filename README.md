@@ -9,7 +9,8 @@ An independent Android rebuild based on the authorized redesign brief and analys
 - Initial reverse-engineering inventory: documented in `docs/reverse-engineering-notes.md`.
 - New Android project scaffold: committed.
 - First implementation milestone: branded ASH GPS home screen, coordinate entry, saved-coordinate history, and a foreground mock-location service using Android test-provider APIs.
-- CI build: GitHub Actions workflow added; first run is being checked.
+- CI build: **first debug APK build succeeded** on GitHub Actions (run `45406550969`). Artifact: `ash-gps-debug-apk`.
+- Validation: APK archive inspected and confirmed to be an Android package; not yet installed or tested on a physical device.
 - This is a clean implementation. The original APK has not been patched or redistributed.
 
 ## Important setup
