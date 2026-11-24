@@ -39,9 +39,35 @@ The layout inventory supports the existence of these UI areas:
 
 The resource names and layouts establish that these surfaces are packaged. They do not alone prove all business rules or edge-case behavior.
 
-## Color and dimension caution
+## Resolved original color values
 
-Binary XML refers to color and dimension resources by IDs (for example, `@0x7f050443` and `@0x7f0600d9`). This pass has not yet resolved the complete `resources.arsc` table into exact color hex values and dp values. Therefore no guessed palette or spacing values are being presented as original values.
+The `resources.arsc` table has now been parsed for the app's named color resources. Confirmed original values include:
+
+| Resource name | Value |
+|---|---|
+| `black_222222` | `#FF222222` |
+| `blue_0066E5` | `#FF0066E5` |
+| `blue_0076ff` | `#FF0076FF` |
+| `blue_00AEFF` | `#FF00AEFF` |
+| `blue_1780F6` | `#FF1780F6` |
+| `blue_2A84F6` | `#FF2A84F6` |
+| `grey_dcdcdc` | `#FFDCDCDC` |
+| `light_green_32CD32` | `#FF32CD32` |
+| `red_FF3333` | `#FFFF3333` |
+| `route_config_seek` | `#FF509AE9` |
+| `white` | `#FFFFFFFF` |
+| `white_alp20` | `#CCFFFFFF` |
+| `white_alp40` | `#80FFFFFF` |
+| `white_js_btn` | `#A0FFFFFF` |
+| `yellow_FFA500` | `#FFFFA500` |
+
+These values are preserved in `app/src/main/res/values/original_colors.xml`. This is a recovered resource palette, not a claim that every listed color is used on every screen. Exact dimension values and full resource-to-view mapping remain in progress.
+
+## Maps configuration note
+
+The original manifest declares Google Maps and Places components and contains a Maps API key. The original key will not be copied into ASH GPS. A separately owned and appropriately restricted Google Maps API key is required for a production map build; no secret from the uploaded APK is exposed or reused.
+
+The original manifest also includes Play licensing/billing and PairIP application components. These are not advertising SDKs; they must not be removed or bypassed as part of the ads-only scope without separate authorization.
 
 ## Next implementation sequence
 
