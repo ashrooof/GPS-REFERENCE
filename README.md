@@ -1,6 +1,6 @@
-# GPS Reference — Premium Edition
+# ASH GPS — Premium Edition
 
-This repository is the development workspace for an authorized Premium redesign of GPS Location Faker.
+This repository is the development workspace for an authorized source-less rebuild and Premium redesign of GPS Location Faker, branded as **ASH GPS**.
 
 ## Current status
 
@@ -12,6 +12,6 @@ This repository is the development workspace for an authorized Premium redesign 
 
 ## Next milestone
 
-Obtain the original project source (or written confirmation from the developer that a source-less rebuild is intended), then map the existing features and implement the Premium UI and ad-free configuration in maintainable source code.
+Reconstruct the app as **ASH GPS** from the available APK analysis, map and implement the original core features where feasible, and deliver a maintainable Android source project with a new Premium identity and no ads. The original Android Studio source is unavailable.
 
 See [the initial technical audit](docs/technical-audit.md).
