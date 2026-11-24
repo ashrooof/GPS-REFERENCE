@@ -54,3 +54,15 @@ The APK contains binary Android XML and DEX bytecode. Proper analysis needs Andr
 4. Implement a clean, independently buildable Android project; do not reuse or strip third-party SDK code without appropriate rights.
 5. Add tests for permission flows, mock-location start/stop, persistence, route behavior, backup/restore, and Android-version compatibility.
 6. Produce signed debug builds for user testing before any release build.
+
+
+## Decoded main-screen structure (follow-up pass)
+
+A direct binary-XML pass confirms that the main experience is map-first:
+- `activity_main_binding.xml` provides a full-screen content frame.
+- `fragment_map_page.xml` embeds a Google Maps `SupportMapFragment` and overlays map controls/cards.
+- `layout_home_basic_title.xml` and `layout_home_route_set.xml` are separate basic-location and route-setup cards.
+- `mock_floating_view.xml` includes the custom `JoystickView` and its directional labels/actions.
+- `dialog_map_page_menu.xml` includes switch-style menu items; `dialog_map_type.xml` handles map-type selection.
+
+See [decoded-layout-audit.md](decoded-layout-audit.md) for the structural findings and remaining resource-table work. Exact color hex values and dimensions are not yet resolved, so the provisional prototype palette must not be treated as original styling.
