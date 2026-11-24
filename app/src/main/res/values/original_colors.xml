@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Values resolved from the original GPS Location Faker 1.6.2 resources. -->
+    <color name="original_black_222222">#FF222222</color>
+    <color name="original_blue_0066E5">#FF0066E5</color>
+    <color name="original_blue_0076ff">#FF0076FF</color>
+    <color name="original_blue_00AEFF">#FF00AEFF</color>
+    <color name="original_blue_1780F6">#FF1780F6</color>
+    <color name="original_blue_2A84F6">#FF2A84F6</color>
+    <color name="original_grey_dcdcdc">#FFDCDCDC</color>
+    <color name="original_light_green_32CD32">#FF32CD32</color>
+    <color name="original_red_FF3333">#FFFF3333</color>
+    <color name="original_route_config_seek">#FF509AE9</color>
+    <color name="original_white">#FFFFFFFF</color>
+    <color name="original_white_alp20">#CCFFFFFF</color>
+    <color name="original_white_alp40">#80FFFFFF</color>
+    <color name="original_white_js_btn">#A0FFFFFF</color>
+    <color name="original_yellow_FFA500">#FFFFA500</color>
+</resources>
