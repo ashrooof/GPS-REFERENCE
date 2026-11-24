@@ -31,6 +31,7 @@ public class MainActivity extends Activity {
     private static final String PREFS = "ash_gps_data";
     private EditText latitudeField;
     private EditText longitudeField;
+    private EditText routeField;
     private TextView statusView;
     private SharedPreferences preferences;
     private double pendingLatitude = 30.0444;
@@ -103,6 +104,30 @@ public class MainActivity extends Activity {
         LinearLayout.LayoutParams coordinateParams = params(-1, -2);
         coordinateParams.topMargin = dp(12);
         page.addView(coordinates, coordinateParams);
+
+        TextView routeTitle = heading("ROUTE POINTS (OPTIONAL)");
+        LinearLayout.LayoutParams routeTitleParams = params(-1, -2);
+        routeTitleParams.topMargin = dp(22);
+        page.addView(routeTitle, routeTitleParams);
+
+        routeField = new EditText(this);
+        routeField.setHint("30.0444, 31.2357\\n30.0500, 31.2400\\nOne latitude, longitude pair per line");
+        routeField.setHintTextColor(muted);
+        routeField.setTextColor(Color.WHITE);
+        routeField.setTextSize(13);
+        routeField.setGravity(Gravity.TOP | Gravity.START);
+        routeField.setMinLines(3);
+        routeField.setPadding(dp(12), dp(12), dp(12), dp(12));
+        routeField.setBackground(panel());
+        LinearLayout.LayoutParams routeFieldParams = params(-1, dp(112));
+        routeFieldParams.topMargin = dp(10);
+        page.addView(routeField, routeFieldParams);
+
+        Button startRoute = actionButton("PLAY ROUTE", surface, accent);
+        LinearLayout.LayoutParams startRouteParams = params(-1, dp(48));
+        startRouteParams.topMargin = dp(9);
+        page.addView(startRoute, startRouteParams);
+        startRoute.setOnClickListener(v -> requestAndStartRoute());
 
         Button start = actionButton("START MOCK LOCATION", accent, background);
         LinearLayout.LayoutParams startParams = params(-1, dp(54));
@@ -255,6 +280,42 @@ public class MainActivity extends Activity {
             return;
         }
         startMockService();
+    }
+
+    private void requestAndStartRoute() {
+        String[] lines = routeField.getText().toString().trim().split("\\r?\\n");
+        java.util.ArrayList<Double> latitudes = new java.util.ArrayList<>();
+        java.util.ArrayList<Double> longitudes = new java.util.ArrayList<>();
+        try {
+            for (String line : lines) {
+                if (line.trim().isEmpty()) continue;
+                String[] pair = line.trim().split("[,;\\s]+");
+                if (pair.length != 2) throw new NumberFormatException();
+                double lat = Double.parseDouble(pair[0]);
+                double lon = Double.parseDouble(pair[1]);
+                if (lat < -90 || lat > 90 || lon < -180 || lon > 180) throw new NumberFormatException();
+                latitudes.add(lat);
+                longitudes.add(lon);
+            }
+            if (latitudes.size() < 2) throw new NumberFormatException();
+        } catch (NumberFormatException error) {
+            Toast.makeText(this, "Add at least two valid lines: latitude, longitude", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_LOCATION);
+            Toast.makeText(this, "Grant location permission, then tap PLAY ROUTE again.", Toast.LENGTH_LONG).show();
+            return;
+        }
+        Intent intent = new Intent(this, MockLocationService.class);
+        double[] lats = new double[latitudes.size()];
+        double[] lons = new double[longitudes.size()];
+        for (int i = 0; i < lats.length; i++) { lats[i] = latitudes.get(i); lons[i] = longitudes.get(i); }
+        intent.putExtra(MockLocationService.EXTRA_ROUTE_LATITUDES, lats);
+        intent.putExtra(MockLocationService.EXTRA_ROUTE_LONGITUDES, lons);
+        intent.putExtra(MockLocationService.EXTRA_INTERVAL_MS, 1000L);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) startForegroundService(intent); else startService(intent);
+        setStatus("ROUTE PLAYBACK STARTED", accent);
     }
 
     private void startMockService() {
