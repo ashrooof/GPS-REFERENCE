@@ -1,17 +1,35 @@
 # ASH GPS — Premium Edition
 
-This repository is the development workspace for an authorized source-less rebuild and Premium redesign of GPS Location Faker, branded as **ASH GPS**.
+An independent Android rebuild based on the authorized redesign brief and analysis of the supplied GPS Location Faker 1.6.2 APK package.
 
 ## Current status
 
-- Original Android Studio source project: not yet provided.
-- Available input: compiled Android App Bundle/APKS package, version 1.6.2.
-- Initial APK inspection: completed.
-- Reproducible Android build: blocked until source code and build configuration are available.
-- No application binaries have been modified or redistributed from this repository.
+- Original Android Studio source: unavailable.
+- Original input inspected: `GPS Location Faker_1.6.2.apks`.
+- Initial reverse-engineering inventory: documented in `docs/reverse-engineering-notes.md`.
+- New Android project scaffold: committed.
+- First implementation milestone: branded ASH GPS home screen, coordinate entry, saved-coordinate history, and a foreground mock-location service using Android test-provider APIs.
+- CI build: GitHub Actions workflow added; first run is being checked.
+- This is a clean implementation. The original APK has not been patched or redistributed.
 
-## Next milestone
+## Important setup
 
-Reconstruct the app as **ASH GPS** from the available APK analysis, map and implement the original core features where feasible, and deliver a maintainable Android source project with a new Premium identity and no ads. The original Android Studio source is unavailable.
+To test mock locations on a device, grant location permission and explicitly select **ASH GPS** in Android Developer Options → Select mock location app. Android controls this setting; the app does not bypass it.
 
-See [the initial technical audit](docs/technical-audit.md).
+## Planned milestones
+
+1. Verify the first Android debug build and test the mock-location service on a physical device.
+2. Add map rendering, place search, route creation/playback, and joystick controls.
+3. Add grouped history, GPX import/export, and backup/restore.
+4. Add device/version compatibility testing and prepare a signed release build.
+
+Map rendering and place search need a chosen map/search provider and any required API credentials. No working original Mapbox credential was recovered during the first inspection.
+
+## Repository layout
+
+- `app/` — Android application source.
+- `docs/reverse-engineering-notes.md` — APK findings and implementation constraints.
+- `docs/technical-audit.md` — initial package/security/component audit.
+- `.github/workflows/android-build.yml` — CI debug APK build.
+
+The source-less rebuild may not reproduce every behavior of the original application exactly. Features will be verified incrementally rather than assumed.
